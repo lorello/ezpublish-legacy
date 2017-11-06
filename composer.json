@@ -60,5 +60,11 @@
     "require-dev": {
         "phpunit/phpunit": "3.7.*",
         "zetacomponents/php-generator": "~1.1"
-    }
+    },
+    "repositories": [
+        {
+          "type": "vcs",
+          "url": "https://github.com/Opencontent/ezgmaplocation-ls-extension.git"
+        }
+    ]
 }
