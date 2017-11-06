@@ -216,28 +216,25 @@ class eZGeneralDigestHandler extends eZNotificationEventHandler
     {
         $user = eZUser::currentUser();
         $settings = eZGeneralDigestUserSettings::fetchByUserId( $user->attribute( 'contentobject_id' ) );
-
-        if ( $http->hasPostVariable( 'ReceiveDigest_' . self::NOTIFICATION_HANDLER_ID ) &&
-             $http->hasPostVariable( 'ReceiveDigest_' . self::NOTIFICATION_HANDLER_ID ) == '1' )
+        if ( $settings instanceof eZGeneralDigestUserSettings )
         {
-            $settings->setAttribute( 'receive_digest', 1 );
-            $digestType = $http->postVariable( 'DigestType_' . self::NOTIFICATION_HANDLER_ID );
-            $settings->setAttribute( 'digest_type', $digestType );
-            if ( $digestType == 1 )
-            {
-                $settings->setAttribute( 'day', $http->postVariable( 'Weekday_' . self::NOTIFICATION_HANDLER_ID ) );
+            if ($http->hasPostVariable('ReceiveDigest_' . self::NOTIFICATION_HANDLER_ID)
+                && $http->hasPostVariable('ReceiveDigest_' . self::NOTIFICATION_HANDLER_ID) == '1'
+            ) {
+                $settings->setAttribute('receive_digest', 1);
+                $digestType = $http->postVariable('DigestType_' . self::NOTIFICATION_HANDLER_ID);
+                $settings->setAttribute('digest_type', $digestType);
+                if ($digestType == 1) {
+                    $settings->setAttribute('day', $http->postVariable('Weekday_' . self::NOTIFICATION_HANDLER_ID));
+                } else if ($digestType == 2) {
+                    $settings->setAttribute('day', $http->postVariable('Monthday_' . self::NOTIFICATION_HANDLER_ID));
+                }
+                $settings->setAttribute('time', $http->postVariable('Time_' . self::NOTIFICATION_HANDLER_ID));
+                $settings->store();
+            } else {
+                $settings->setAttribute('receive_digest', 0);
+                $settings->store();
             }
-            else if ( $digestType == 2 )
-            {
-                $settings->setAttribute( 'day', $http->postVariable( 'Monthday_' . self::NOTIFICATION_HANDLER_ID ) );
-            }
-            $settings->setAttribute( 'time', $http->postVariable( 'Time_' . self::NOTIFICATION_HANDLER_ID ) );
-            $settings->store();
-        }
-        else
-        {
-            $settings->setAttribute( 'receive_digest', 0 );
-            $settings->store();
         }
     }
 
