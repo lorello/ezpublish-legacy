@@ -18,6 +18,12 @@ if ( file_exists( 'config.php' ) )
 if ( file_exists( 'config.cluster.php' ) )
     include( 'config.cluster.php' );
 
+if ( isset($_SERVER['ISTANZA'])){
+    $configClusterIstanza = 'config_cluster_' . $_SERVER['ISTANZA'] . '.php';
+    if ( file_exists( $configClusterIstanza ) )
+        include( $configClusterIstanza );
+}
+
 if ( !defined( 'CLUSTER_STORAGE_BACKEND' ) || CLUSTER_STORAGE_BACKEND === null )
 {
     if ( CLUSTER_ENABLE_DEBUG )
