@@ -1,0 +1,9 @@
+User-agent: *
+Disallow: /Classificazioni/
+Disallow: /backend/
+Disallow: /content/search
+Disallow: /content/advancedsearch
+Disallow: /api/
+Disallow: /layout/
+Disallow: /content/keyword
+Disallow: /debug
