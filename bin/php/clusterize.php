@@ -66,6 +66,15 @@ function copyMediafilesToDB( $remove )
         $cli->output( "- " . $filePath);
         $fileHandler->fileStore( $filePath, 'mediafile', $remove );
     }
+ 
+    $rows = $db->arrayQuery('select filename, mime_type from ezflowmedia' );
+    foreach( $rows as $row )
+    {
+        if ($row['filename'] == '') continue; 
+        $filePath = filePathForBinaryFile( $row['filename'] , $row['mime_type'] );
+        $cli->output( "- " . $filePath);
+        $fileHandler->fileStore( $filePath, 'binaryfile', $remove );
+    }
 
     $cli->output();
 }
