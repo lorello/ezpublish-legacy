@@ -18,7 +18,11 @@ if ( file_exists( 'config.php' ) )
 if ( file_exists( 'config.cluster.php' ) )
     include( 'config.cluster.php' );
 
-if ( isset($_SERVER['ISTANZA'])){
+$filename = rawurldecode( ltrim( $_SERVER['REQUEST_URI'], '/' ) );
+if ( isset($_SERVER['SOTTOISTANZA']) && !empty($_SERVER['SOTTOISTANZA']) && strpos($filename, 'var/' . $_SERVER['SOTTOISTANZA']) !== false){
+    $configClusterIstanza = 'config_cluster_' . $_SERVER['SOTTOISTANZA'] . '.php';
+    include( $configClusterIstanza );
+}elseif ( isset($_SERVER['ISTANZA'])){
     $configClusterIstanza = 'config_cluster_' . $_SERVER['ISTANZA'] . '.php';
     if ( file_exists( $configClusterIstanza ) )
         include( $configClusterIstanza );
