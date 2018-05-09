@@ -30,7 +30,7 @@
         "ezsystems/ezpublish-legacy-installer": "*",
         "ezsystems/ezautosave-ls": "~5.3",
         "ezsystems/ezflow-ls-extension": "~5.3",
-        "ezsystems/ezgmaplocation-ls-extension": "dev-postgres",
+        "ezsystems/ezgmaplocation-ls-extension": "~5.3",
         "ezsystems/ezie-ls": "~5.3",
         "ezsystems/ezmbpaex-ls": "~5.3",
         "ezsystems/ezmultiupload-ls": "~5.3",
