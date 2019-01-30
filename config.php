@@ -44,4 +44,4 @@ define( 'EZP_INI_FILEMTIME_CHECK', false );
    @see http://share.ez.no/forums/install-configuration/imagemagick-causes-high-server-load-when-opening-gallery
    @see http://www.daniloaz.com/en/617/systems/high-cpu-load-when-converting-images-with-imagemagick/
 */
-#putenv( "MAGICK_THREAD_LIMIT=1" );
+putenv( "MAGICK_THREAD_LIMIT=1" );
