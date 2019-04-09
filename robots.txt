@@ -1,0 +1,14 @@
+User-agent: *
+Disallow: /Classificazioni/
+Disallow: /backend/
+Disallow: /content/search
+Disallow: /content/advancedsearch
+Disallow: /api/
+Disallow: /layout/
+Disallow: /content/keyword
+Disallow: /debug
+Disallow: /Media/
+Disallow: /*/(tag)/
+Request-rate: 1/10
+Crawl-delay: 10
+Visit-time: 0000-0600
