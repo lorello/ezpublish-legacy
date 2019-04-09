@@ -301,6 +301,8 @@ class eZScript
         // all eZINI instances as they may not take into account siteaccess specific settings.
         eZINI::resetAllInstances( false );
 
+        ezpEvent::getInstance()->registerEventListeners();
+
         // Set the global setting which is read by the session lib
         $GLOBALS['eZSiteBasics']['session-required'] = $this->UseSession;
 
