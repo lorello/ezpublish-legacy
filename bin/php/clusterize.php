@@ -22,6 +22,8 @@ error_reporting( E_ALL | E_NOTICE );
 
 require_once 'autoload.php';
 
+eZDB::setErrorHandling( eZDB::ERROR_HANDLING_EXCEPTIONS );
+
 // This code is taken from eZBinaryFile::storedFileInfo()
 function filePathForBinaryFile($fileName, $mimeType )
 {
@@ -42,6 +44,9 @@ function copyBinaryfilesToDB( $remove )
 
     foreach( $rows as $row )
     {
+        if ( $row['filename'] == '' )
+            continue;
+
         $filePath = filePathForBinaryFile( $row['filename'] , $row['mime_type'] );
         $cli->output( "- " . $filePath);
         $fileHandler->fileStore( $filePath, 'binaryfile', $remove );
@@ -60,9 +65,30 @@ function copyMediafilesToDB( $remove )
     $rows = $db->arrayQuery('select filename, mime_type from ezmedia' );
     foreach( $rows as $row )
     {
+        if ( $row['filename'] == '' )
+            continue;
+
         $filePath = filePathForBinaryFile( $row['filename'] , $row['mime_type'] );
         $cli->output( "- " . $filePath);
         $fileHandler->fileStore( $filePath, 'mediafile', $remove );
+    }
+
+    try
+    {
+        $rows = $db->arrayQuery('select filename, mime_type from ezflowmedia');
+        foreach ($rows as $row)
+        {
+            if ($row['filename'] == '')
+                continue;
+
+            $filePath = filePathForBinaryFile($row['filename'], $row['mime_type']);
+            $cli->output("- " . $filePath);
+            $fileHandler->fileStore($filePath, 'binaryfile', $remove);
+        }
+    }
+    catch (eZDBException $e)
+    {
+        $cli->output( $e->getMessage() );
     }
 
     $cli->output();
@@ -78,6 +104,9 @@ function copyImagesToDB( $remove )
     $rows = $db->arrayQuery('select filepath from ezimagefile' );
     foreach( $rows as $row )
     {
+        if ( $row['filepath'] == '' )
+            continue;
+
         $filePath = $row['filepath'];
         $cli->output( "- " . $filePath);
 
