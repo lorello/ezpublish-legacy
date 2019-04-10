@@ -15,3 +15,13 @@
 /vendor
 /composer.lock
 
+settings/.gitignore
+settings/cluster-config
+settings/composer.json
+settings/override
+settings/siteaccess
+
+extension/*
+!extension/ezformtoken
+!extension/ezjscore
+!extension/ezoe
